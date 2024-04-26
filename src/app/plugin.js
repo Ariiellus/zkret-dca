@@ -11,13 +11,8 @@ export async function getEthprice() {
     const ethPrice = await chainlinkPlugin.getPrice(MainnetPriceFeeds.EthUsd);
     console.log("ETH price is", String(ethPrice.answer).slice(0,6));
 
-    // Verifica si ethPrice.answer es un BigInt y conviértelo a Number antes de dividir
     const answer = typeof ethPrice.answer === 'bigint' ? Number(ethPrice.answer) : ethPrice.answer;
-
-    // Realiza la división como un número flotante
     const formattedPrice = answer / 1000000;
-
-    // Redondea a dos decimales
     const finalPrice = formattedPrice.toFixed(2);
 
     return finalPrice;
