@@ -1,15 +1,29 @@
 "use client"
 import Image from "next/image";
 import { usePrivy } from '@privy-io/react-auth';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getEthprice } from './plugin';
 
 export default function LoginPage() {
   const { login } = usePrivy();
   const [daiAmount, setDaiAmount] = useState('');
+  const [ethPriceState, setEthPriceState] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDaiAmount(event.target.value);
   };
+
+useEffect (()=> {
+  const asyncGetEthPrice = async () =>  {
+    const ethPrice = await getEthprice() 
+    setEthPriceState(ethPrice);
+  }
+  asyncGetEthPrice()
+
+},[])
+
+const displayedEthPrice = ethPriceState ? (parseFloat(ethPriceState) / 100).toFixed(2) : 'Loading...';
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
@@ -38,10 +52,10 @@ export default function LoginPage() {
 
         <div className="bg-dark-500 p-6 rounded-lg shadow-lg flex flex-col items-center w-full max-w-md">
           <div className="flex items-center justify-between mb-4 w-full">
-            <label className="bg-gray-900 text-white py-2 px-4 rounded-lg">balance</label>
+            <label className="bg-gray-900 text-white py-2 px-4 rounded-lg"> DAI</label>
             <p className="bg-gray-900 text-white py-2 px-4 rounded-lg">DAI</p>
             <p className="text-white mx-2">swap for</p>
-            <label className="bg-gray-900 text-white py-2 px-4 rounded-lg">balance</label>
+            <label className="bg-gray-900 text-white py-2 px-4 rounded-lg">{displayedEthPrice}</label>
             <p className="bg-gray-900 text-white py-2 px-4 rounded-lg">ETH</p>
           </div>
 
