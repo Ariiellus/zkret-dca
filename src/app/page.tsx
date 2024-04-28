@@ -6,11 +6,11 @@ import { getEthprice } from './plugin';
 
 export default function LoginPage() {
   const { login } = usePrivy();
-  const [daiAmount, setDaiAmount] = useState('');
+  const [ghoAmount, setGhoAmount] = useState('');
   const [ethPriceState, setEthPriceState] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDaiAmount(event.target.value);
+    setGhoAmount(event.target.value);
   };
 
 useEffect (()=> {
@@ -23,7 +23,6 @@ useEffect (()=> {
 },[])
 
 const displayedEthPrice = ethPriceState ? (parseFloat(ethPriceState) / 100).toFixed(2) : 'Loading...';
-
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
@@ -52,25 +51,25 @@ const displayedEthPrice = ethPriceState ? (parseFloat(ethPriceState) / 100).toFi
 
         <div className="bg-dark-500 p-6 rounded-lg shadow-lg flex flex-col items-center w-full max-w-md">
           <div className="flex items-center justify-between mb-4 w-full">
-            <label className="bg-gray-900 text-white py-2 px-4 rounded-lg"> DAI</label>
-            <p className="bg-gray-900 text-white py-2 px-4 rounded-lg">DAI</p>
-            <p className="text-white mx-2">swap for</p>
-            <label className="bg-gray-900 text-white py-2 px-4 rounded-lg">{displayedEthPrice}</label>
+            <input
+                id="ghoAmount"
+                type="text"
+                value={ghoAmount}
+                onChange={handleInputChange}
+                className="w-full bg-gray-500 text-white rounded-lg py-2 px-4 leading-tight focus:outline-none"
+                placeholder="0"
+              />
+            <p className="bg-gray-900 text-white py-2 px-4 rounded-lg">gho</p>
+            <p className="text-black mx-2">swap for</p>
+            <label className="w-full bg-gray-500 text-white rounded-lg py-2 px-4 leading-tight focus:outline-none">{displayedEthPrice}</label>
             <p className="bg-gray-900 text-white py-2 px-4 rounded-lg">ETH</p>
           </div>
 
           <div className="mb-4 w-full">
-            <label htmlFor="daiAmount" className="block text-black text-sm font-bold mb-2">
-              How much DAI do you want to invest?
+            <label htmlFor="ghoAmount" className="block text-black text-sm font-bold mb-2">
+              How much gho do you want to invest?
             </label>
-            <input
-              id="daiAmount"
-              type="text"
-              value={daiAmount}
-              onChange={handleInputChange}
-              className="w-full bg-gray-800 text-white rounded-lg py-2 px-4 leading-tight focus:outline-none"
-              placeholder="0"
-            />
+
           </div>
           <button className="group rounded-lg border border-gray px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 w-full">
             <span className="text-2xl font-semibold">
